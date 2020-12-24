@@ -1,0 +1,15 @@
+Evaluation on dev at Epoch 1/50. Step:85/4250: 
+SpanFPreRecMetric: f=0.0, pre=0.0, rec=0.0
+
+Evaluation on dev at Epoch 2/50. Step:170/4250: 
+SpanFPreRecMetric: f=0.019802, pre=0.266667, rec=0.010283
+
+Evaluation on dev at Epoch 3/50. Step:255/4250: 
+SpanFPreRecMetric: f=0.481481, pre=0.697561, rec=0.367609
+
+Evaluation on dev at Epoch 4/50. Step:340/4250: 
+SpanFPreRecMetric: f=0.614412, pre=0.604478, rec=0.624679
+
+
+In Epoch:None/Step:340, got best dev performance:
+SpanFPreRecMetric: f=0.614412, pre=0.604478, rec=0.624679
