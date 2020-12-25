@@ -94,7 +94,7 @@ class SAModel(nn.Module):
                  use_knowledge=False,
                  use_zen=False,
                  gram2id=None, task_ner=None, task_cws=None,
-                 device=None
+                 device=None, adv_feature
                  ):
         """
         :param tag_vocab: fastNLP Vocabulary
@@ -153,6 +153,8 @@ class SAModel(nn.Module):
         self.out_fc_cws = nn.Linear(self.output_dim * 2, len(cws_tag_vocab))
         self.out_cls    = Out_Cls(self.output_dim, 2)
         self.fc_dropout = nn.Dropout(fc_dropout)
+        
+        self.adv_dropout = nn.Dropout(adv_feature)
 
         trans_ner = allowed_transitions(ner_tag_vocab, include_start_end=True)
         self.crf_ner = ConditionalRandomField(len(ner_tag_vocab), include_start_end_trans=True,
@@ -198,7 +200,8 @@ class SAModel(nn.Module):
                 还需要反转梯度，进行线性变化
             '''
             adv_feature = self.Grl.apply(max_pool_output)
-
+            adv_feature = self.adv_dropout(adv_feature)
+            
             adv_logits = self.out_cls(adv_feature)
             task_ner = self.task_ner
             if adv_logits.size() != self.task_ner.size():
@@ -234,10 +237,11 @@ class SAModel(nn.Module):
                 还需要反转梯度，进行线性变化
             '''
             adv_feature = self.Grl.apply(max_pool_output)
+            adv_feature = self.adv_dropout(adv_feature)
             # print('ner_max_pool_output', max_pool_output.size())
             # print('adv_feature', adv_feature.size())
             adv_logits = self.out_cls(adv_feature)
-            adv_loss = self.cls_fn(adv_logits, self.task_ner)
+            adv_loss = self.cls_fn(adv_logits, self.task_cws)
 
         # new add end----------------------------------------------------------------
         if ner_target is None:
