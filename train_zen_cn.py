@@ -84,10 +84,18 @@ def write_log(sent):
         f.write(sent)
         f.write("\n")
 
-torch.manual_seed(args.seed)#---为CPU设置随机种子
-torch.cuda.manual_seed(args.seed)#---为当前GPU设置随机种子
-# torch.cuda.manual_seed_all(args.seed)---若使用多GPU，使用该命令设置随机种子
-
+def setup_seed(seed):
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed(seed)
+        torch.cuda.manual_seed_all(seed)
+    np.random.seed(seed)
+    random.seed(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+    
+setup_seed(args.seed)
+    
 @cache_results(ner_name, _refresh=False)
 def load_ner_data():
     ner_paths = {'train': 'data/{}/train.txt'.format(ner_dataset),
