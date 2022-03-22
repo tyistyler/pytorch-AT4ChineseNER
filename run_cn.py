@@ -14,7 +14,7 @@ zen_model = "./data/ZEN_pretrain_base"
 log = "log/{}_bert_{}.txt".format(dataset, pool_method)
 
 #       num_layers = 1
-os.system("python3 train_zen_cn.py --ner_dataset weibo cws_dataset msr "
+os.system("python3 train_zen_cn.py --ner_dataset weibo --cws_dataset msr "
           "--seed 14 --bert_model {} --pool_method first "
           "--lr 0.001 --fc_dropout 0.3 "
           "--log {} --batch_size 16 ".format(bert_model, log))
