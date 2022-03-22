@@ -94,7 +94,7 @@ class SAModel(nn.Module):
                  use_knowledge=False,
                  use_zen=False,
                  gram2id=None, task_ner=None, task_cws=None,
-                 device=None, adv_feature
+                 device=None, adv_feature=None
                  ):
         """
         :param tag_vocab: fastNLP Vocabulary
