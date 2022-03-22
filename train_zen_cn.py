@@ -18,6 +18,8 @@ from modules.callbacks import EvaluateCallback
 from datetime import datetime
 
 import torch
+import random
+import numpy as np
 
 if torch.cuda.is_available():
     device = "cuda"
