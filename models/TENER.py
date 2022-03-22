@@ -94,7 +94,7 @@ class SAModel(nn.Module):
                  use_knowledge=False,
                  use_zen=False,
                  gram2id=None, task_ner=None, task_cws=None,
-                 device=None, adv_feature=None
+                 device=None, adv_dropout=0.3
                  ):
         """
         :param tag_vocab: fastNLP Vocabulary
@@ -154,7 +154,7 @@ class SAModel(nn.Module):
         self.out_cls    = Out_Cls(self.output_dim, 2)
         self.fc_dropout = nn.Dropout(fc_dropout)
         
-        self.adv_dropout = nn.Dropout(adv_feature)
+        self.adv_dropout = nn.Dropout(adv_dropout)
 
         trans_ner = allowed_transitions(ner_tag_vocab, include_start_end=True)
         self.crf_ner = ConditionalRandomField(len(ner_tag_vocab), include_start_end_trans=True,
